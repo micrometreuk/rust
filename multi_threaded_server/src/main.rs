@@ -1,41 +1,34 @@
-
 use std::{
-    fs,
-    io::{prelude::*, BufReader},
-    net::{TcpListener, TcpStream},
-    thread,
-    time::Duration,
+    fs, io::prelude::*, net::{TcpListener, TcpStream}
 };
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
-
+        println!("main connected");
         handle_connection(stream);
     }
 }
 
 
 
+// --snip--
+
 fn handle_connection(mut stream: TcpStream) {
-    let buf_reader = BufReader::new(&mut stream);
-    let request_line = buf_reader.lines().next().unwrap().unwrap();
+    // --snip--
+    let mut buffer = [0; 1024];
+    stream.read(&mut buffer).unwrap();
 
-
-
-
-
-    let (status_line, filename) = match &request_line[..] {
-        "GET / HTTP/1.1" => ("HTTP/1.1 200 OK", "index.html"),
-        "GET /sleep HTTP/1.1" => {
-            thread::sleep(Duration::from_secs(5));
-            ("HTTP/1.1 200 OK", "sleep.html")
-        }
-        _ => ("HTTP/1.1 404 NOT FOUND", "404.html"),
+    let (status_line, filename) = if buffer.starts_with(b"get /http/1.1\r\n") {
+        ("HTTP/1.1 200 OK", "index.html")
+    } else {
+        ("HTTP/1.1 404 NOT FOUND", "404.html")
     };
 
     let contents = fs::read_to_string(filename).unwrap();
+    
+    
     let length = contents.len();
 
     let response =
