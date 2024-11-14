@@ -1,8 +1,6 @@
 use std::{
-    env::consts,
-    fmt::format,
     fs,
-    io::{prelude::*, BufReader},
+    io::prelude::*,
     net::{TcpListener, TcpStream},
 };
 
