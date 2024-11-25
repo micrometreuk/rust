@@ -1,0 +1,14 @@
+{
+  "results": [
+    {
+      "plate": "GL19TNJ",
+      "confidence": 82.46801,
+      "matches_template": 1,
+      "plate_index": 0,
+      "region": "gb",
+      "region_confidence": 0,
+      "processing_time_ms": 20.625452,
+      "requested_topn": 1
+    }
+  ]
+}
