@@ -9,6 +9,7 @@ fn main() {
     if output.status.success() {
         let stdout = String::from_utf8(output.stdout).expect("failed to convert output to string");
         println!("{}", stdout);
+        println!("{}", stdout);
     } else {
         let stderr = String::from_utf8(output.stderr).expect("failed to convert error output to string");
         eprintln!("Error: {}", stderr);
